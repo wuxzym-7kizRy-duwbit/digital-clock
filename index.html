@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Цифровые Часы</title>
+  <style>
+    /* Основные стили */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #fff;
+      color: #333;
+      transition: all 0.5s ease;
+    }
+
+    /* Темная тема */
+    body.dark-mode {
+      background-color: #333;
+      color: #fff;
+    }
+
+    /* Стиль для блока с часами */
+    .clock {
+      text-align: center;
+      font-size: 60px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      padding: 20px;
+      border-radius: 10px;
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.5s ease;
+    }
+
+    /* Стиль для отображения даты */
+    .date {
+      font-size: 20px;
+      margin-top: 10px;
+      font-weight: normal;
+    }
+
+    /* Кнопка для переключения темы */
+    .toggle-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn:hover {
+      background-color: #666;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="clock" id="clock">
+    <div id="time"></div>
+    <div class="date" id="date"></div>
+  </div>
+
+  <button class="toggle-btn" id="themeToggle">Переключить тему</button>
+
+  <script>
+    // Функция для обновления времени и даты
+    function updateClock() {
+      const now = new Date();
+
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+
+      // Форматируем время, чтобы всегда были две цифры
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+
+      // Обновляем отображаемое время
+      document.getElementById('time').textContent = `${hours}:${minutes}:${seconds}`;
+
+      // Дата
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const date = now.toLocaleDateString('ru-RU', options);
+      document.getElementById('date').textContent = date;
+    }
+
+    // Обновляем часы каждую секунду
+    setInterval(updateClock, 1000);
+    updateClock(); // Первоначальное обновление сразу после загрузки страницы
+
+    // Переключение между светлой и темной темой
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+
+</body>
+</html>
